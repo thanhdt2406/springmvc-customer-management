@@ -26,4 +26,6 @@ public interface ICustomerDAO {
     void delete(List<Customer> customers);
 
     void deleteAll();
+
+    void add(Customer customer);
 }

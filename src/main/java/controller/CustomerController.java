@@ -19,6 +19,19 @@ public class CustomerController {
         return new ModelAndView("index","customers",customerDAO.findAll());
     }
 
+    @GetMapping("/create")
+    public ModelAndView create(){
+        return new ModelAndView("create","customer",new Customer());
+    }
+
+    @PostMapping("/create-customer")
+    public ModelAndView create(@ModelAttribute Customer customer, RedirectAttributes redirectAttributes){
+        customer.setId(Math.round(Math.random()*10000));
+        customerDAO.add(customer);
+        redirectAttributes.addFlashAttribute("createSuccess","Create new customer successful!");
+        return new ModelAndView("redirect:/customer/create");
+    }
+
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable Long id){
         return new ModelAndView("edit","customer",customerDAO.findOne(id));
@@ -32,8 +45,10 @@ public class CustomerController {
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable Long id, RedirectAttributes redirectAttributes){
+    public ModelAndView delete(@PathVariable Long id){
         customerDAO.delete(id);
         return new ModelAndView("redirect:/customer/");
+
     }
+
 }

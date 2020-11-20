@@ -6,20 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
-
 public class CustomerDAOImpl implements ICustomerDAO {
     private static List<Customer> customers;
     private static long autoIncreaseId = 0;
 
     static {
-        customers = asList(
-                new Customer(autoIncreaseId++, "T", "t@codegym.vn", "Da Nang"),
-                new Customer(autoIncreaseId++, "Nhat", "nhat@codegym.vn", "Quang Tri"),
-                new Customer(autoIncreaseId++, "Trang", "trang@codegym.vn", "Ha Noi"),
-                new Customer(autoIncreaseId++, "Nguyen Binh Son", "son@codegym.vn", "Sai Gon"),
-                new Customer(autoIncreaseId++, "Dang Xuan Hoa", "hoa.dang@codegym.vn", "Da Nang")
-        );
+        customers = new ArrayList<>();
+        customers.add(new Customer(autoIncreaseId++, "T", "t@codegym.vn", "Da Nang"));
+        customers.add(new Customer(autoIncreaseId++, "Nhat", "nhat@codegym.vn", "Quang Tri"));
+        customers.add(new Customer(autoIncreaseId++, "Trang", "trang@codegym.vn", "Ha Noi"));
+        customers.add(new Customer(autoIncreaseId++, "Nguyen Binh Son", "son@codegym.vn", "Sai Gon"));
+        customers.add(new Customer(autoIncreaseId++, "Dang Xuan Hoa", "hoa.dang@codegym.vn", "Da Nang"));
     }
 
     @Override
@@ -66,7 +63,12 @@ public class CustomerDAOImpl implements ICustomerDAO {
 
     @Override
     public void delete(Long id) {
-        customers.removeIf(c -> c.getId().equals(id));
+        for (int i = 0; i < customers.size(); i++) {
+            if (id.equals(customers.get(i).getId())) {
+                customers.remove(i);
+                return;
+            }
+        }
     }
 
     @Override
@@ -82,6 +84,11 @@ public class CustomerDAOImpl implements ICustomerDAO {
     @Override
     public void deleteAll() {
         customers = new ArrayList<>();
+    }
+
+    @Override
+    public void add(Customer customer) {
+        customers.add(customer);
     }
 
     private Customer persist(Customer customer) {
