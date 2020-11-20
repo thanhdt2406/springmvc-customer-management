@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<div>
+    <h1><a th:href="@{/customer/}">Back to customer list</a></h1>
+</div>
+<div th:if="${editSuccess}">
+    <span th:text="${editSuccess}"></span>
+</div>
+<form th:action="@{/customer/edit}" th:object="${customer}" th:method="post">
+    <div>
+        <label th:label="id" hidden>ID</label>
+        <input th:value="${customer.getId()}" th:name="id" hidden>
+    </div>
+    <div>
+        <label th:label="name">Name</label>
+        <input th:value="${customer.getName()}" th:name="name">
+    </div>
+    <div>
+        <label th:label="email">Email</label>
+        <input th:value="${customer.getEmail()}" th:name="email">
+    </div>
+    <div>
+        <label th:label="address">Address</label>
+        <input th:value="${customer.getAddress()}" th:name="address">
+    </div>
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>
